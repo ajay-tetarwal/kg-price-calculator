@@ -1,4 +1,4 @@
-package com.example.kgpricecalculator;
+package in.ajaytetarwal.kgpricecalculator;
 
 import android.app.Activity;
 import android.os.Bundle;
