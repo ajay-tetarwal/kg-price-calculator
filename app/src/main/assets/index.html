@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>KG Price Calculator</title>
+<style>
+:root{--bg:#f3f6fb;--card:#fff;--text:#172033;--muted:#697386;--line:#e2e8f0;--accent:#1769e0;--soft:#eaf2ff;--field:#fff}
+body.dark{--bg:#101827;--card:#1b2638;--text:#f0f4fb;--muted:#a9b5c8;--line:#344157;--accent:#79aaff;--soft:#243958;--field:#121d2d}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;padding:18px 14px 30px}
+main{max-width:560px;margin:auto}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}
+h1{font-size:24px;line-height:1.15;margin:0}.sub{color:var(--muted);font-size:13px;margin-top:5px}
+button,select,input{font:inherit}button{border:0;border-radius:12px;padding:11px 14px;background:var(--accent);color:white;font-weight:650;cursor:pointer}
+.theme{background:var(--card);border:1px solid var(--line);color:var(--text);padding:10px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:17px;margin:12px 0;box-shadow:0 5px 18px #10204008}
+h2{font-size:17px;margin:0 0 5px}.hint{color:var(--muted);font-size:12px;margin-bottom:15px}
+label{display:block;font-size:13px;color:var(--muted);margin:11px 0 6px}
+input,select{width:100%;border:1px solid var(--line);background:var(--field);color:var(--text);padding:12px;border-radius:11px;outline:none}
+input:focus,select:focus{border-color:var(--accent)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.result{background:var(--soft);border-radius:13px;padding:13px;margin-top:13px}
+.result small{display:block;color:var(--muted);font-size:12px}.answer{font-size:25px;font-weight:800;color:var(--accent);margin-top:3px;overflow-wrap:anywhere}
+.row{display:flex;gap:8px}.row>*{flex:1}.tabs{display:flex;background:var(--bg);padding:4px;border-radius:12px;gap:4px;margin:12px 0}
+.tabs button{flex:1;background:transparent;color:var(--muted);padding:10px 7px}.tabs button.active{background:var(--accent);color:#fff}
+.keypad{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px}.keypad button{background:var(--bg);color:var(--text);border:1px solid var(--line);font-size:19px;padding:13px 4px}.keypad button.op{background:var(--soft);color:var(--accent)}.keypad button.equals{background:var(--accent);color:white}
+.calcdisplay{font-size:28px;text-align:right;padding:15px;background:var(--field);border:1px solid var(--line);border-radius:12px;min-height:62px;overflow-wrap:anywhere}
+.foot{text-align:center;color:var(--muted);font-size:11px;margin:20px 0 0}
+</style>
+</head>
+<body>
+<main>
+<div class="top"><div><h1>KG Price Calculator</h1><div class="sub">Price aur quantity ka hisaab aasaan banayein</div></div><button class="theme" id="themeBtn" onclick="toggleTheme()">🌙</button></div>
+
+<section class="card">
+<h2>💰 Paise se quantity</h2><div class="hint">Aapke paise mein kitna samaan milega?</div>
+<label>Price per kg (₹)</label><input id="p1" type="number" inputmode="decimal" placeholder="Jaise 80" oninput="calcQty()">
+<div class="grid"><div><label>Aapke paise (₹)</label><input id="money" type="number" inputmode="decimal" placeholder="Jaise 20" oninput="calcQty()"></div>
+<div><label>Quantity unit</label><select id="unit1" onchange="calcQty()"><option value="g">Gram (g)</option><option value="ml">Millilitre (ml)</option></select></div></div>
+<div class="result"><small>Aapko milega</small><div class="answer" id="qtyResult">—</div></div>
+</section>
+
+<section class="card">
+<h2>⚖️ Quantity se price</h2><div class="hint">Gram ya ml ke hisaab se kitne paise lagenge?</div>
+<label>Price per kg / litre (₹)</label><input id="p2" type="number" inputmode="decimal" placeholder="Jaise 120" oninput="calcPrice()">
+<div class="grid"><div><label>Quantity</label><input id="amount" type="number" inputmode="decimal" placeholder="Jaise 250" oninput="calcPrice()"></div>
+<div><label>Quantity unit</label><select id="unit2" onchange="calcPrice()"><option value="g">Gram (g)</option><option value="kg">Kilogram (kg)</option><option value="ml">Millilitre (ml)</option><option value="l">Litre (L)</option></select></div></div>
+<div class="result"><small>Itne paise lagenge</small><div class="answer" id="priceResult">—</div></div>
+</section>
+
+<section class="card">
+<h2>🧮 Calculator</h2><div class="hint">Jod, ghataav, guna aur bhaag</div>
+<div class="calcdisplay" id="display">0</div>
+<div class="keypad">
+<button onclick="press('7')">7</button><button onclick="press('8')">8</button><button onclick="press('9')">9</button><button class="op" onclick="press('/')">÷</button>
+<button onclick="press('4')">4</button><button onclick="press('5')">5</button><button onclick="press('6')">6</button><button class="op" onclick="press('*')">×</button>
+<button onclick="press('1')">1</button><button onclick="press('2')">2</button><button onclick="press('3')">3</button><button class="op" onclick="press('-')">−</button>
+<button onclick="press('0')">0</button><button onclick="press('.')">.</button><button class="op" onclick="clearCalc()">C</button><button class="op" onclick="press('+')">+</button>
+<button onclick="backspace()">⌫</button><button onclick="press('(')">(</button><button onclick="press(')')">)</button><button class="equals" onclick="calculate()">=</button>
+</div>
+</section>
+<div class="foot">Works offline • KG Price Calculator v1.0</div>
+</main>
+<script>
+function num(id){return parseFloat(document.getElementById(id).value)}
+function moneyFmt(v){if(!Number.isFinite(v))return '—';return '₹'+v.toLocaleString('en-IN',{maximumFractionDigits:4})}
+function qtyFmt(v,u){if(!Number.isFinite(v))return '—';return v.toLocaleString('en-IN',{maximumFractionDigits:4})+' '+u}
+function calcQty(){let p=num('p1'),m=num('money'),u=document.getElementById('unit1').value;let r=document.getElementById('qtyResult');if(!(p>0)||!(m>=0)){r.textContent='—';return}let q=m/p*1000;r.textContent=qtyFmt(q,u)}
+function calcPrice(){let p=num('p2'),a=num('amount'),u=document.getElementById('unit2').value;let r=document.getElementById('priceResult');if(!(p>=0)||!(a>=0)){r.textContent='—';return}let factor=(u==='g'||u==='ml')?1000:1;r.textContent=moneyFmt(p*a/factor)}
+function toggleTheme(){document.body.classList.toggle('dark');document.getElementById('themeBtn').textContent=document.body.classList.contains('dark')?'☀️':'🌙'}
+let expr='';function updateDisplay(){document.getElementById('display').textContent=expr||'0'}
+function press(x){if(expr.length<80){expr+=x;updateDisplay()}}
+function clearCalc(){expr='';updateDisplay()}
+function backspace(){expr=expr.slice(0,-1);updateDisplay()}
+function calculate(){
+ try {
+  if(!expr || !/^[0-9+*/(). -]+$/.test(expr)) throw new Error('invalid');
+  let i=0;
+  function skip(){while(expr[i]===' ')i++}
+  function number(){skip();let start=i;if(expr[i]==='+ '||expr[i]==='- ')i++;while(/[0-9.]/.test(expr[i]||''))i++;let s=expr.slice(start,i);if(!s||s==='.'||!Number.isFinite(Number(s)))throw new Error('number');return Number(s)}
+  function factor(){skip();if(expr[i]==='+'){i++;return factor()}if(expr[i]==='-'){i++;return -factor()}if(expr[i]==='('){i++;let v=add();skip();if(expr[i++]!==')')throw new Error('paren');return v}return number()}
+  function mul(){let v=factor();while(true){skip();let op=expr[i];if(op!=='*'&&op!=='/')break;i++;let r=factor();v=op==='*'?v*r:v/r}return v}
+  function add(){let v=mul();while(true){skip();let op=expr[i];if(op!=='+'&&op!=='-')break;i++;let r=mul();v=op==='+'?v+r:v-r}return v}
+  let result=add();skip();if(i!==expr.length||!Number.isFinite(result))throw new Error('invalid');
+  expr=String(Math.round((result+Number.EPSILON)*1e8)/1e8);updateDisplay();
+ } catch(e){document.getElementById('display').textContent='Invalid';expr=''}
+}
+</script>
+</body></html>

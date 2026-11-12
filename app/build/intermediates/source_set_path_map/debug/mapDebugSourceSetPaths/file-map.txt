@@ -1,0 +1,7 @@
+com.example.kgpricecalculator.app-pngs-0 /data/data/com.termux/files/home/KG-Price-Calculator/app/build/generated/res/pngs/debug
+com.example.kgpricecalculator.app-resValues-1 /data/data/com.termux/files/home/KG-Price-Calculator/app/build/generated/res/resValues/debug
+com.example.kgpricecalculator.app-packageDebugResources-2 /data/data/com.termux/files/home/KG-Price-Calculator/app/build/intermediates/incremental/debug/packageDebugResources/merged.dir
+com.example.kgpricecalculator.app-packageDebugResources-3 /data/data/com.termux/files/home/KG-Price-Calculator/app/build/intermediates/incremental/debug/packageDebugResources/stripped.dir
+com.example.kgpricecalculator.app-debug-4 /data/data/com.termux/files/home/KG-Price-Calculator/app/build/intermediates/merged_res/debug/mergeDebugResources
+com.example.kgpricecalculator.app-debug-5 /data/data/com.termux/files/home/KG-Price-Calculator/app/src/debug/res
+com.example.kgpricecalculator.app-main-6 /data/data/com.termux/files/home/KG-Price-Calculator/app/src/main/res
