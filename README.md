@@ -1,41 +1,44 @@
 # KG Price Calculator
 
-An offline Android utility reconstructed from the APK supplied by the project owner.
+A simple offline calculator for calculating prices based on weight and quantity.
 
-## Included features recovered from the APK
+## Features
 
-- Money-to-quantity calculation (price per kg, money amount, grams or millilitres)
-- Quantity-to-price calculation (g, kg, ml or litre)
-- Basic four-operation calculator with parentheses
-- Light/dark theme toggle
-- Bundled HTML interface; no network access or runtime third-party library
+- Calculate prices based on weight and quantity
+- Light and dark theme toggle
+- Bundled HTML interface
+- Works offline
+- No runtime third-party libraries
 
 ## Important reconstruction notice
 
-This is a **new, reconstructed source project**, not the original Android Studio/Termux project. The HTML interface was recovered from `assets/index.html` in the supplied APK. The Android wrapper was recreated as a minimal Java WebView activity. The original signing key, original source tree, exact original build settings, and complete original source history cannot be recovered from this APK.
+This is a new, reconstructed source project, not the original Android Studio/Termux project. The HTML interface was recovered from `assets/index.html` in the supplied APK. The Android wrapper was recreated as a minimal Java WebView activity.
+
+The original signing key, original source tree, exact original build settings, and complete original source history cannot be recovered from this APK.
 
 The calculator's expression evaluator has been rewritten as a small arithmetic parser rather than using dynamic JavaScript `Function()` execution.
 
 ## Build
 
 Requirements:
+
 - JDK 17
 - Android SDK Platform 35
 - Android Gradle Plugin 8.7.3 / Gradle 8.9
 
-From this directory, run:
+Run from the project directory:
 
-```sh
-gradle assembleDebug
-```
+    gradle assembleDebug
 
-The debug APK will be at `app/build/outputs/apk/debug/app-debug.apk`.
+The debug APK will be at:
+
+    app/build/outputs/apk/debug/app-debug.apk
 
 For a release build, configure signing locally. Never commit signing keys or passwords.
 
 ## Package details
 
-- Application ID: `com.example.kgpricecalculator`
+- Application ID: `in.ajaytetarwal.kgpricecalculator`
 - Version: `1.0` (versionCode 1)
 - Minimum Android: API 23
 - Target Android: API 35
@@ -48,4 +51,5 @@ The reconstructed project requests no Android permissions and does not include n
 
 ## License
 
-A draft MIT license is included as `LICENSE.DRAFT`. It is **not yet a confirmed license**. Before public release, the project owner must choose and apply a license they are entitled to grant, fill in the copyright holder, and rename the finalized file to `LICENSE`. F-Droid cannot treat an unconfirmed placeholder license as a valid open-source license.
+This project is licensed under the MIT License.
+See the [LICENSE](LICENSE) file for details.
