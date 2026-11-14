@@ -5,3 +5,8 @@ local.properties
 *.aab
 *.jks
 *.keystore
+
+# Private signing files
+*.jks
+*.keystore
+keystore-base64.txt
